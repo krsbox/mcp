@@ -4,26 +4,31 @@ from llm_wrapper.core.base import BaseLLMClient, LLMResponse
 from typing import Dict, Any, List, AsyncGenerator
 
 class ProviderSDKClient(BaseLLMClient):
-    """Wrapper for the official Google GenAI Python SDK."""
+    """Professional provider tier using the Google GenAI SDK."""
     
     def __init__(self):
-        # Ensure GEMINI_API_KEY is defined in .env or environment variables
+        # Ensure GOOGLE_API_KEY is in your .env
         if not settings.google_api_key:
-            raise ValueError("GEMINI_API_KEY not found in settings. Please set it in .env or environment variables.")
-        self.client = genai.GenerativeModel("gemini-pro") # Initialize with a default model
-        # TODO: Allow provider_model_name to be passed in initialization or generate method
+            raise ValueError("GOOGLE_API_KEY not found in settings. Please set it in .env or environment variables.")
+        genai.configure(api_key=settings.google_api_key)
+        # Client initialization is often not explicit for genai with api_key configured globally
+        # We will use genai.GenerativeModel directly in generate/stream
         print("ProviderSDKClient initialized.")
 
     async def generate(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> LLMResponse:
-        # TODO: Map ModelParameters to genai.GenerativeModel.generate_content options
-        # TODO: Handle context (e.g., chat history) for genai
         try:
-            response = await self.client.generate_content_async(
+            # Use the provider_model_name from settings or default to "gemini-3-pro"
+            model_name = settings.provider_model_name or "gemini-3-pro"
+            model = genai.GenerativeModel(model_name)
+            
+            # TODO: Map ModelParameters to genai.GenerationConfig
+            # TODO: Handle context (e.g., chat history) for genai
+            
+            response = await model.generate_content_async(
                 contents=prompt,
                 # generation_config=genai.types.GenerationConfig(**parameters) # This would require mapping
             )
-            # Assuming response has a 'text' attribute
-            # For Gemini, response.text might not always be directly available if it's a ToolCode or other type.
+            
             generated_text = ""
             if response.candidates:
                 for part in response.candidates[0].content.parts:
@@ -32,19 +37,29 @@ class ProviderSDKClient(BaseLLMClient):
 
             return LLMResponse(
                 content=generated_text.strip(),
-                model="gemini-pro", # Use the actual model name used
-                raw_response=response
+                model=model_name, # Use the actual model name used
+                raw_response=str(response)
             )
         except Exception as e:
             # TODO: Define specific error types for better handling
-            return LLMResponse(content=f"Error: {str(e)}", model="gemini-pro")
+            return LLMResponse(content=f"Error: {str(e)}", model=settings.provider_model_name or "gemini-3-pro")
 
     async def stream(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> AsyncGenerator[str, None]:
-        # TODO: Implement streaming for genai.GenerativeModel.generate_content_async(stream=True)
-        print("ProviderSDKClient: Streaming not yet fully implemented, falling back to generate.")
-        response = await self.generate(prompt, parameters, context)
-        yield response.content
-
+        model_name = settings.provider_model_name or "gemini-3-pro"
+        model = genai.GenerativeModel(model_name)
+        
+        # TODO: Implement full streaming logic
+        responses = await model.generate_content_async(
+            contents=prompt,
+            stream=True # Assuming stream=True returns an async iterator
+        )
+        
+        async for chunk in responses:
+            if chunk.candidates:
+                for part in chunk.candidates[0].content.parts:
+                    if hasattr(part, 'text'):
+                        yield part.text
+            
     async def list_models(self) -> List[str]:
         # TODO: Implement listing models using genai.list_models()
-        return ["gemini-pro"] # Placeholder
+        return [settings.provider_model_name or "gemini-3-pro"] # Placeholder
