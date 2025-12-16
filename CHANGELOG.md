@@ -16,3 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - fix: Remove redundant uv installation step in CI workflow ([a4fef70](https://github.com/krsbox/mcp/commit/a4fef70dfd1454472d5da9ff1966f21ed14a2207) by krsbox).
 
 <!-- insertion marker -->
+
+## 2025-12-17
+
+feat: Implemented comprehensive hybrid LLM system including core engine, specialized MCP services, resilience, and benchmarking. Updated documentation.
+
