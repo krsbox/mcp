@@ -88,11 +88,10 @@ The following tasks are organized into phases, reflecting the detailed steps req
 **Status:** pending
 
 *   **Task 5.1: Define MCP Data Models (Python using Pydantic) based on the Model Context Protocol specification**
-    *   **Status:** pending
-    *   Based on the Model Context Protocol specification, define Python data models (e.g., using Pydantic) for `ModelIdentification`, `ModelCapabilities`, `InferenceSettings`, `TokenizerDetails`, `RuntimeProperties`, and the overarching `ModelContext` object.
-    *   This will establish the schema for how model information is communicated within the hybrid system.
+    *   **Status:** completed
+    *   The MCP Data Models are defined by directly importing robust Pydantic-based data models from `mcp.types`, ensuring full compliance with the protocol. This establishes the schema for how model information is communicated within the hybrid system.
 *   **Task 5.2: Basic MCP Server/Client Framework (abstract base classes)**
-    *   **Status:** pending
+    *   **Status:** in_progress
     *   Develop abstract Python classes for `MCPServer` and `MCPClient` that define the core interface for MCP interactions.
     *   Implement placeholder methods for `connect`, `cleanup`, `list_tools`, `call_tool`, etc., to guide future implementations.
 *   **Task 5.3: Configuration Management for MCP servers (using .env and mcp.json)**

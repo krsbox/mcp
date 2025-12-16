@@ -7,3 +7,4 @@ mypy
 git-changelog
 pydantic-settings
 google-generativeai
+mcp>=1.2.0

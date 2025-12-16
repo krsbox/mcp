@@ -1,33 +1,50 @@
-from typing import Any, List, Dict
-from src.llm_wrapper.core.config import settings
+import asyncio
+from contextlib import AsyncExitStack
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+from mcp.types import Tool, CallToolResult
+from typing import List, Dict, Any
 
-class MCPClient:
-    """
-    Placeholder for the MCPClient.
-    Manages connection to MCP servers and exposes methods for tool discovery and execution.
-    """
-    def __init__(self):
-        self.mcp_server_timeout = settings.mcp_server_timeout
-        print(f"Placeholder MCPClient initialized with timeout: {self.mcp_server_timeout}s")
-        # In future, this would manage connections to multiple MCP servers
+class LocalMCPClient:
+    """Manages connection to a single MCP server."""
+    
+    def __init__(self, command: str, args: list[str]):
+        self.server_params = StdioServerParameters(
+            command=command,
+            args=args,
+            env=None
+        )
+        self.exit_stack = AsyncExitStack()
+        self.session: ClientSession | None = None
 
-    async def initialize_servers(self) -> None:
-        """
-        Placeholder: Discovers and initializes connections to MCP servers.
-        """
-        print("Placeholder MCPClient: Initializing MCP servers.")
-        # Logic for reading mcp.json or dynamic discovery will go here
+    async def connect(self):
+        """Initializes the stdio transport and session."""
+        # This starts the server process (e.g., npx @modelcontextprotocol/server-filesystem)
+        stdio_transport = await self.exit_stack.enter_async_context(stdio_client(self.server_params))
+        self.read_stream, self.write_stream = stdio_transport
+        
+        self.session = await self.exit_stack.enter_async_context(
+            ClientSession(self.read_stream, self.write_stream)
+        )
+        
+        # Must initialize as per protocol
+        await self.session.initialize()
+        print(f"Connected to MCP server: {self.server_params.command}")
 
-    async def list_tools(self, server_id: str = None) -> List[str]:
-        """
-        Placeholder: Lists available tools from connected MCP servers.
-        """
-        print(f"Placeholder MCPClient: Listing tools from server '{server_id or 'all'}'.")
-        return ["dummy_tool_1", "dummy_tool_2"]
+    async def list_tools(self) -> List[Tool]:
+        """Fetches available tools from the server."""
+        if not self.session:
+            raise RuntimeError("Session not initialized. Call connect() first.")
+        
+        response = await self.session.list_tools()
+        return response.tools
 
-    async def call_tool(self, tool_name: str, args: Dict[str, Any], server_id: str = None) -> Any:
-        """
-        Placeholder: Calls a specific tool on an MCP server.
-        """
-        print(f"Placeholder MCPClient: Calling tool '{tool_name}' with args {args}.")
-        return {"result": f"Dummy result from {tool_name}"}
+    async def call_tool(self, name: str, arguments: Dict[str, Any]) -> CallToolResult:
+        """Executes a tool on the server."""
+        if not self.session:
+            raise RuntimeError("Session not initialized. Call connect() first.")
+        return await self.session.call_tool(name, arguments)
+
+    async def disconnect(self):
+        """Gracefully shuts down the connection and server process."""
+        await self.exit_stack.aclose()
