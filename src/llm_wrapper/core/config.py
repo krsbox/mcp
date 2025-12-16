@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     default_local_model: str = "llama3"
     
     # Remote Provider Config
-    provider_model_name: str = "gemini-pro" # Added default provider model name
+    provider_model_name: str = "gemini-2.5-flash" # Updated default provider model name
     
     # MCP Settings
     mcp_server_timeout: int = 30

@@ -1,4 +1,4 @@
-from google import generativeai as genai # Use generativeai as the user's snippet suggested genai
+from google import generativeai as genai
 from llm_wrapper.core.config import settings
 from llm_wrapper.core.base import BaseLLMClient, LLMResponse
 from typing import Dict, Any, List, AsyncGenerator
@@ -11,14 +11,11 @@ class ProviderSDKClient(BaseLLMClient):
         if not settings.google_api_key:
             raise ValueError("GOOGLE_API_KEY not found in settings. Please set it in .env or environment variables.")
         genai.configure(api_key=settings.google_api_key)
-        # Client initialization is often not explicit for genai with api_key configured globally
-        # We will use genai.GenerativeModel directly in generate/stream
         print("ProviderSDKClient initialized.")
 
     async def generate(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> LLMResponse:
         try:
-            # Use the provider_model_name from settings or default to "gemini-3-pro"
-            model_name = settings.provider_model_name or "gemini-3-pro"
+            model_name = settings.provider_model_name
             model = genai.GenerativeModel(model_name)
             
             # TODO: Map ModelParameters to genai.GenerationConfig
@@ -37,21 +34,21 @@ class ProviderSDKClient(BaseLLMClient):
 
             return LLMResponse(
                 content=generated_text.strip(),
-                model=model_name, # Use the actual model name used
+                model=model_name, # Use the actual model name from settings
                 raw_response=str(response)
             )
         except Exception as e:
             # TODO: Define specific error types for better handling
-            return LLMResponse(content=f"Error: {str(e)}", model=settings.provider_model_name or "gemini-3-pro")
+            return LLMResponse(content=f"Error: {str(e)}", model=settings.provider_model_name)
 
     async def stream(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> AsyncGenerator[str, None]:
-        model_name = settings.provider_model_name or "gemini-3-pro"
+        model_name = settings.provider_model_name
         model = genai.GenerativeModel(model_name)
         
         # TODO: Implement full streaming logic
         responses = await model.generate_content_async(
             contents=prompt,
-            stream=True # Assuming stream=True returns an async iterator
+            stream=True
         )
         
         async for chunk in responses:
@@ -62,4 +59,4 @@ class ProviderSDKClient(BaseLLMClient):
             
     async def list_models(self) -> List[str]:
         # TODO: Implement listing models using genai.list_models()
-        return [settings.provider_model_name or "gemini-3-pro"] # Placeholder
+        return [settings.provider_model_name] # Placeholder
