@@ -39,3 +39,9 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** User was editing `GEMINI.md` and accidentally introduced extraneous conversational text. The user subsequently corrected the file.
 *   **Resolution:** User manually corrected the `GEMINI.md` file, removing the unintended content.
 *   **Impact:** Minor, as the error was promptly identified and corrected by the user. Reinforces the importance of careful manual editing of critical project documentation.
+
+### Issue ID: ERR-007
+*   **Issue:** Failure to execute `git-changelog` via `uv run`.
+*   **Context:** After installing `git-changelog` via `uv pip install git-changelog` and attempting to run it using `uv run git-changelog` (and `uv run python -m git_changelog`), the command initially failed with "No such file or directory" or "No module named".
+*   **Resolution:** Reinstalling `git-changelog` using `uv pip install git-changelog` resolved the issue, allowing `uv run git-changelog --output CHANGELOG.md` to execute successfully. This highlighted intricacies in `uv`'s environment management and executable paths.
+*   **Impact:** Temporarily delayed the initial generation of `CHANGELOG.md` and required troubleshooting of `uv` command invocation.
