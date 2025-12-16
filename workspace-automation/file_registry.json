@@ -1,0 +1,108 @@
+{
+    "timestamp": "2025-12-16 15:44:12.870992",
+    "scanned_path": "/media/sunil-kr/storage/project",
+    "files": [
+        {
+            "path": ".github/PULL_REQUEST_TEMPLATE.md",
+            "size_bytes": 3161,
+            "last_modified": "2025-12-16 14:52:09.323836",
+            "file_type": ".md"
+        },
+        {
+            "path": ".github/dependabot.yml",
+            "size_bytes": 268,
+            "last_modified": "2025-12-16 15:03:36.672245",
+            "file_type": ".yml"
+        },
+        {
+            "path": ".github/workflows/auto-inventory.yml",
+            "size_bytes": 569,
+            "last_modified": "2025-12-16 14:58:23.101657",
+            "file_type": ".yml"
+        },
+        {
+            "path": ".github/workflows/python-ci.yml",
+            "size_bytes": 667,
+            "last_modified": "2025-12-16 14:51:34.032983",
+            "file_type": ".yml"
+        },
+        {
+            "path": ".gitignore",
+            "size_bytes": 14,
+            "last_modified": "2025-12-16 14:33:22.135906",
+            "file_type": ""
+        },
+        {
+            "path": "CHANGELOG.md",
+            "size_bytes": 1196,
+            "last_modified": "2025-12-16 15:01:35.792964",
+            "file_type": ".md"
+        },
+        {
+            "path": "CHECKLIST_CODE_REVIEW.md",
+            "size_bytes": 2860,
+            "last_modified": "2025-12-16 14:53:09.338952",
+            "file_type": ".md"
+        },
+        {
+            "path": "CHECKLIST_DEVELOPMENT.md",
+            "size_bytes": 2611,
+            "last_modified": "2025-12-16 14:30:15.038714",
+            "file_type": ".md"
+        },
+        {
+            "path": "CHECKLIST_PROJECT_GROWTH.md",
+            "size_bytes": 3586,
+            "last_modified": "2025-12-16 14:45:56.976195",
+            "file_type": ".md"
+        },
+        {
+            "path": "ERROR_REGISTRY.md",
+            "size_bytes": 3226,
+            "last_modified": "2025-12-16 14:48:42.457698",
+            "file_type": ".md"
+        },
+        {
+            "path": "GEMINI.md",
+            "size_bytes": 5313,
+            "last_modified": "2025-12-16 15:25:00.943003",
+            "file_type": ".md"
+        },
+        {
+            "path": "PLAN.md",
+            "size_bytes": 6327,
+            "last_modified": "2025-12-16 15:26:58.025187",
+            "file_type": ".md"
+        },
+        {
+            "path": "requirements.txt",
+            "size_bytes": 37,
+            "last_modified": "2025-12-16 11:28:18.941508",
+            "file_type": ".txt"
+        },
+        {
+            "path": "workspace-automation/src/auto_register.py",
+            "size_bytes": 5371,
+            "last_modified": "2025-12-16 15:26:09.151838",
+            "file_type": ".py"
+        }
+    ],
+    "directories": [
+        {
+            "path": ".github"
+        },
+        {
+            "path": ".github/workflows"
+        },
+        {
+            "path": "workspace-automation/src"
+        },
+        {
+            "path": "."
+        }
+    ],
+    "summary": {
+        "total_files": 14,
+        "total_directories": 4
+    }
+}
