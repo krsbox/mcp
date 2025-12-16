@@ -52,7 +52,7 @@ The following tasks are organized into phases, reflecting the detailed steps req
 **Status:** pending
 
 *   **Task 2.1: Define Wrapper Architecture & Core Components:**
-    *   **Status:** pending
+    *   **Status:** completed
     *   Design the high-level architecture for the wrapper that will eventually manage LLM interactions.
     *   Identify core components, interfaces, and data flows.
 *   **Task 2.2: Implement Basic Wrapper Structure:**
