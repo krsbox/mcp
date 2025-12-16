@@ -100,4 +100,26 @@ The `footer` can contain information about breaking changes or reference issues.
 
 If you discover a security vulnerability, please report it responsibly by contacting [maintainer-email@example.com] instead of opening a public issue. This allows us to address the issue privately before a public disclosure.
 
+## File Editing and Backup Workflow (No-Pypass Measure)
+
+To ensure the integrity and history of our work, especially for crucial files, we implement a "no-pypass" measure before making edits. This relies on the `pre_edit_backup.sh` helper script.
+
+**Purpose:** Always create a timestamped snapshot of a file *before* you begin editing it. This provides an immediate, local backup that can be used for quick reverts if changes go awry, or for reviewing previous states.
+
+**How to Use:**
+
+1.  **Before opening a file for editing:** Navigate to your terminal and run the `pre_edit_backup.sh` script, providing the path to the file you intend to modify:
+
+    ```bash
+    ./pre_edit_backup.sh <path/to/your/file.py>
+    ```
+
+    *Example:* `./pre_edit_backup.sh src/main.py`
+
+2.  The script will create a timestamped copy of the file (e.g., `src/main_20251216_103000.py`) in the `backups/pre_edit_snapshots` directory, preserving its original directory structure.
+
+3.  **Proceed with your edits:** After the backup is confirmed, you can safely open and modify the original file (`<path/to/your/file.py>`).
+
+**Importance (No-Pypass):** Adhering to this workflow is crucial. It acts as your first line of defense against accidental data loss or unwanted changes, providing granular local history beyond what Git stages. Consider this a mandatory step for any significant file modification. The `backups/pre_edit_snapshots` directory is `.gitignored`, so these snapshots will remain local to your development environment.
+
 ---
