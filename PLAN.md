@@ -1,31 +1,32 @@
-# Project Plan: Hybrid LLM System with MCP Orchestration
+# Project Plan: AWS MCP Servers for Contextual LLM Enhancement
 
 ## Project Goal
-Implement a hybrid LLM system combining local and provider-based LLMs, orchestrated via the Model Context Protocol (MCP), to intelligently route requests based on various factors.
+Implement a suite of specialized Model Context Protocol (MCP) servers focusing on AWS-specific context and document management to enhance future LLM applications. LLM integration is a subsequent phase.
 
 ## Assumptions
 *   **Language:** Python
 *   **MCP Definition:** Model Context Protocol (standardized specification for model capabilities/configuration).
-*   **Local LLM:** Tiny models for efficiency and resource constraints.
-*   **Provider LLM:** External APIs (e.g., OpenAI, AWS Bedrock).
+*   **Core Focus:** AWS services integration and efficient document management.
+*   **Future Integration:** LLM orchestration and interaction will be integrated in a later phase.
 
 ## High-Level Roadmap
 
-1.  **Foundational Setup:** Establish the basic environment and core MCP structures.
-2.  **Local LLM Integration:** Implement and integrate a local LLM.
-3.  **Provider LLM Integration:** Implement and integrate at least one provider LLM.
-4.  **MCP Orchestration & Routing:** Build the logic to intelligently choose and interact with LLMs.
-5.  **Refinement & Testing:** Optimize and thoroughly test the system.
+1.  **Foundational Setup & Core MCP Structures:** Establish the basic environment and core MCP structures.
+2.  **Document Management System:** Implement capabilities for scanning, analyzing, and indexing documents.
+3.  **AWS MCP Server Development:** Develop specialized MCP servers for AWS services (e.g., DocumentDB).
+4.  **Interactive Rules/Game Integration:** Implement interactive reasoning rules or game mechanics.
+5.  **Future LLM Integration:** Plan and integrate LLM functionality (e.g., hybrid LLM system, routing).
+6.  **Refinement & Testing:** Optimize and thoroughly test the system.
 
 ## Detailed Plan & Todo List
 
 The following tasks are organized into phases, reflecting the detailed steps required to achieve the project goal.
 
 ### Phase 1: Foundational Setup & Core MCP Structures
-**Status:** pending
+**Status:** in_progress
 
 *   **Task 1.1: Project Setup & Virtual Environment**
-    *   **Status:** in_progress
+    *   **Status:** completed
     *   Create project directory (already exists).
     *   Set up a Python virtual environment (using `uv venv`).
     *   Install core dependencies (`uv`, `pydantic` for config, `requests`, `httpx`).
@@ -37,74 +38,77 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   **Status:** pending
     *   Develop abstract Python classes for `MCPServer` and `MCPClient` that define the core interface for MCP interactions.
     *   Implement placeholder methods for `connect`, `cleanup`, `list_tools`, `call_tool`, etc., to guide future implementations.
-*   **Task 1.4: Configuration Management for LLMs and MCP servers (using .env and mcp.json)**
+*   **Task 1.4: Configuration Management for MCP servers (using .env and mcp.json)**
     *   **Status:** pending
     *   Implement a `Config` class to load settings from environment variables (e.g., from `.env`) and a dedicated `mcp.json` file for MCP-specific configurations (e.g., server addresses, model mappings).
     *   Ensure secure handling of sensitive information.
+*   **Task 1.5: Implement Generic Workspace Inventory (auto_register.py)**
+    *   **Status:** in_progress
+    *   Develop `workspace-automation/src/auto_register.py` to scan the project directory, respect `.gitignore`, and generate `file_registry.json` and `SYSTEM_INVENTORY.md`.
 
-### Phase 2: Local LLM Integration
+### Phase 2: Document Management System
 **Status:** pending
 
-*   **Task 2.1: Local LLM Environment Setup (choose library, install, acquire tiny model)**
+*   **Task 2.1: Document Storage & Retrieval (e.g., Elasticsearch Integration)**
     *   **Status:** pending
-    *   Select a local LLM library (e.g., `ollama`, `llama-cpp-python`).
-    *   Install the chosen library and its dependencies within the virtual environment.
-    *   Acquire a suitable "tiny model" (e.g., quantized GGUF from Hugging Face Hub) and ensure it's accessible.
-*   **Task 2.2: Implement Local LLM Wrapper (load model, generate text, handle params)**
+    *   Set up and integrate with a document storage solution (e.g., Elasticsearch).
+    *   Implement `ElasticsearchManager` for document indexing and retrieval.
+*   **Task 2.2: Document Scanner & Parser:**
     *   **Status:** pending
-    *   Create a Python class (e.g., `LocalLLMService`) that encapsulates the selected local LLM library.
-    *   Implement methods for loading the tiny model, generating text, and handling common inference parameters (e.g., `temperature`, `max_tokens`).
-    *   Manage resource usage (e.g., CPU/GPU based on available hardware).
-*   **Task 2.3: Local LLM MCP Server/Client (expose capabilities, translate requests)**
+    *   Develop `scan_documents()` functionality to ingest documents from various sources.
+    *   Implement parsers for different document types.
+*   **Task 2.3: Document Analysis Framework:**
     *   **Status:** pending
-    *   Develop an MCP server or client that integrates with the `LocalLLMService`.
-    *   This component will expose the local LLM's `ModelContext` (capabilities, configuration) and translate incoming MCP requests into calls to the `LocalLLMService`.
+    *   Implement `analyze_documents()` to process document content.
+    *   Develop `VectorDocument` structure for documents with embeddings (to be populated in future LLM phase).
 
-### Phase 3: Provider LLM Integration
+### Phase 3: AWS MCP Server Development
 **Status:** pending
 
-*   **Task 3.1: Choose a Provider LLM (e.g., OpenAI, AWS Bedrock) and obtain credentials**
+*   **Task 3.1: AWS DocumentDB MCP Server:**
     *   **Status:** pending
-    *   Select at least one external LLM provider for initial integration.
-    *   Securely obtain and store necessary API keys and credentials (e.g., in `.env` file).
-*   **Task 3.2: Implement Provider LLM Wrapper (make API calls, handle messages, token management)**
+    *   Develop an MCP server specifically for Amazon DocumentDB.
+    *   Implement tools for connection management, database operations, collection management, and document CRUD operations within DocumentDB.
+*   **Task 3.2: AWS Cloud Control API Resources MCP Server:**
     *   **Status:** pending
-    *   Create a Python class (e.g., `OpenAILLMService`, `BedrockLLMService`) that uses the provider's SDK (`openai`, `boto3`).
-    *   Implement methods for making API calls, handling chat messages, and managing token usage and limits.
-*   **Task 3.3: Provider LLM MCP Server/Client (expose capabilities, handle authentication, translate requests)**
-    *   **Status:** pending
-    *   Develop an MCP server or client to encapsulate the chosen provider LLM.
-    *   This will expose the provider LLM's `ModelContext` and translate MCP requests into provider-specific API calls, handling authentication securely.
+    *   Develop an MCP server to list and manage resources via the AWS Cloud Control API (`awscc`).
+    *   Expose capabilities to interact with various AWS services through this API.
 
-### Phase 4: MCP Orchestration & Routing
+### Phase 4: Interactive Rules/Game Integration
 **Status:** pending
 
-*   **Task 4.1: MCP Registry/Discovery (discover and register MCP servers)**
+*   **Task 4.1: Implement Lateral Thinking Puzzle/Turtle Soup Game Rules:**
     *   **Status:** pending
-    *   Implement a mechanism for the orchestration layer to discover and register all available MCP servers (local and provider-based). This could be static (via `mcp.json`) or dynamic.
-*   **Task 4.2: Orchestration Logic (analyze requests, select optimal LLM based on criteria)**
-    *   **Status:** pending
-    *   Create a central `LLMOrchestrator` class responsible for intelligent routing.
-    *   Implement logic to analyze incoming user requests and, based on defined criteria (cost, latency, specific model features from `ModelContext`, local preference), select the most suitable LLM.
-    *   Route the request via the chosen LLM's MCP interface.
-*   **Task 4.3: Cooperative Strategy Implementation (define and implement chaining/routing logic)**
-    *   **Status:** pending
-    *   Define and implement strategies for "co-operative" behavior between LLMs. This might involve chaining calls (e.g., local LLM for initial draft, provider LLM for refinement) or parallel execution for comparative analysis.
+    *   Develop `rules()` and `rules_solver()` functions to define the game mechanics.
+    *   Focus on managing game state and player interactions (e.g., yes/no/irrelevant questions).
 
-### Phase 5: Refinement & Testing
+### Phase 5: Future LLM Integration
 **Status:** pending
 
-*   **Task 5.1: Write Unit Tests for all components**
+*   **Task 5.1: Local LLM Environment Setup:**
     *   **Status:** pending
-    *   Develop comprehensive unit tests for each class and function across the system (MCP data models, LLM wrappers, MCP clients/servers, orchestrator).
-*   **Task 5.2: Develop Integration Tests for end-to-end functionality**
+    *   Select and integrate a local LLM library.
+    *   Acquire and load a suitable tiny model.
+*   **Task 5.2: Provider LLM Integration:**
     *   **Status:** pending
-    *   Create integration tests to verify the seamless interaction between all components: local LLM, provider LLMs, MCP layers, and the orchestration logic.
-*   **Task 5.3: Perform Performance Benchmarking**
+    *   Choose and integrate with an external LLM provider (e.g., OpenAI, AWS Bedrock).
+    *   Manage API calls, messages, and token usage.
+*   **Task 5.3: MCP Orchestration & Routing:**
     *   **Status:** pending
-    *   Conduct performance benchmarking for both local and provider LLMs and the overall orchestration layer to identify bottlenecks and optimize.
-*   **Task 5.4: Improve Error Handling & Robustness**
-    *   **Status:** pending
-    *   Enhance error handling mechanisms, logging, and implement strategies to ensure the system's robustness and graceful degradation under various failure scenarios.
+    *   Implement logic to intelligently choose and interact with LLMs based on requests and criteria.
 
----
+### Phase 6: Refinement & Testing
+**Status:** pending
+
+*   **Task 6.1: Write Comprehensive Unit Tests:**
+    *   **Status:** pending
+    *   Develop unit tests for all components across the system.
+*   **Task 6.2: Develop Integration Tests:**
+    *   **Status:** pending
+    *   Create integration tests to verify seamless interaction between components.
+*   **Task 6.3: Perform Performance Benchmarking:**
+    *   **Status:** pending
+    *   Conduct benchmarking for all integrated components.
+*   **Task 6.4: Improve Error Handling & Robustness:**
+    *   **Status:** pending
+    *   Enhance error handling, logging, and implement robust failure recovery strategies.

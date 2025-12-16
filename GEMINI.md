@@ -2,11 +2,24 @@
 
 This directory contains the "AWS MCP Servers" project, a suite of specialized Model Context Protocol (MCP) servers designed to enhance LLM applications with AWS-specific context. The project aims to improve the quality of AI-generated outputs by providing relevant AWS documentation, best practices, and workflow automation capabilities. It leverages a client-server architecture where MCP clients (like AI coding assistants and chatbots) connect to MCP servers to access AWS capabilities. The core technology is the open-source Model Context Protocol.
 
+**Note:** While designed to *enhance LLM applications*, direct LLM implementation within this project is a future phase.
+
+# Key Capabilities
+
+Based on the provided code snippets, the project aims to develop the following capabilities:
+
+*   **Document Management & Analysis:** Includes functionalities for listing, scanning, and analyzing documents. This involves services for document operations (`document_service`), handling vector documents, and future integration with LLMs (`get_llm()`, `get_search()`) and search engines (e.g., Elasticsearch).
+*   **Interactive Rules/Games:** Incorporates logic for "Lateral Thinking Puzzles" or "Turtle Soup" style games, where `rules()` and `rules_solver()` functions define game mechanics for interactive reasoning and knowledge exploration, often involving human-like interaction rules.
+*   **AWS MCP Servers:** Specialized servers for interacting with AWS services, such as:
+    *   **AWS DocumentDB MCP Server:** Provides tools for connection, database, collection, and document operations within Amazon DocumentDB.
+    *   **AWS Cloud Control API Resources Listing:** Tools for listing and managing resources via `awscc` provider, indicating broad AWS service integration.
+
 # Key Technologies
 
 *   **Model Context Protocol (MCP):** An open protocol for integrating LLM applications with external data sources and tools.
-*   **AWS Services:** The servers provide contextual knowledge and integration with various AWS services.
+*   **AWS Services:** The servers provide contextual knowledge and integration with various AWS services, including DocumentDB and Cloud Control API.
 *   **Python:** Implied as the primary development language, with `uv` and `uvx` used for dependency management.
+*   **Elasticsearch (Planned):** Indications of integration with Elasticsearch for document indexing and search.
 
 # Building and Running
 
