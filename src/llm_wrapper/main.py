@@ -2,8 +2,9 @@ from typing import Any, Dict
 from src.llm_wrapper.core.config import settings
 from src.llm_wrapper.core.base import BaseLLMClient
 from src.llm_wrapper.core.router import RequestRouter
-from src.llm_wrapper.providers.local_client import LocalCLIClient # Import LocalCLIClient
-from src.llm_wrapper.providers.remote_client import ProviderSDKClient # Import ProviderSDKClient
+from src.llm_wrapper.providers.local_client import LocalCLIClient
+from src.llm_wrapper.providers.remote_client import ProviderSDKClient
+from src.llm_wrapper.mcp.manager import MCPManager # Import MCPManager
 from src.data_models.llm_wrapper import InferenceRequest, InferenceResponse
 import logging
 import datetime
@@ -28,11 +29,36 @@ class MCPOrchestrator:
         self.provider_client = ProviderSDKClient()
         self.router = RequestRouter(self.local_client, self.provider_client)
         
-        # Placeholders for other components
+        # Initialize MCP Manager
+        self.mcp_manager = MCPManager()
         self.context_manager: Any = None # Will be an instance of a context manager class
-        self.mcp_client: Any = None # Will be an instance of an MCP client class
         
         logger.info("Core components initialized.")
+
+    async def startup(self):
+        """
+        Performs startup operations, such as connecting to MCP servers.
+        """
+        logger.info("Starting up MCPOrchestrator...")
+        # TODO: Load MCP server configurations from a dedicated config file
+        await self.mcp_manager.register_server(
+            "filesystem", 
+            "npx", 
+            ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"] # Use /tmp for now as a safe default
+        )
+        # Register other servers as needed
+        
+        await self.mcp_manager.initialize_all()
+        logger.info("MCPOrchestrator startup complete.")
+
+    async def shutdown(self):
+        """
+        Performs graceful shutdown operations, such as disconnecting from MCP servers.
+        """
+        logger.info("Shutting down MCPOrchestrator...")
+        await self.mcp_manager.shutdown()
+        logger.info("MCPOrchestrator shutdown complete.")
+
 
     async def health_check(self) -> Dict[str, Any]:
         """
@@ -48,7 +74,7 @@ class MCPOrchestrator:
             "router_status": "OK", 
             "local_llm_client_status": "OK",
             "provider_llm_client_status": "OK",
-            "mcp_client_status": "N/A (not implemented)"
+            "mcp_manager_status": "OK" if self.mcp_manager._is_initialized else "NOT_INITIALIZED",
         }
         logger.info(f"Health check performed: {status}")
         return status
@@ -59,10 +85,15 @@ class MCPOrchestrator:
         """
         logger.info(f"Processing request for prompt: '{request.prompt[:50]}...' (model_id: {request.model_id or 'auto'})")
         
-        # Use the router's generate_with_fallback method
+        # Get all available tools from MCP servers
+        available_tools = await self.mcp_manager.get_all_tools()
+        logger.debug(f"Available tools from MCP: {available_tools.keys()}")
+        
+        # TODO: Potential MCP Context Enrichment (Future Task: Task 5.3)
+        # The router now handles both the 'where' and the 'execution safety'
         response = await self.router.generate_with_fallback(
             prompt=request.prompt,
             parameters=request.parameters.dict(),
-            context=request.context
+            context=request.context # Tools could be passed in context or prompt itself
         )
         return response
