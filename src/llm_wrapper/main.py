@@ -1,9 +1,10 @@
 from typing import Any, Dict
 from src.llm_wrapper.core.config import settings
-from src.llm_wrapper.core.base import BaseLLMClient
-from src.data_models.llm_wrapper import InferenceRequest, InferenceResponse # Import Pydantic models
+from src.llm_wrapper.core.base import BaseLLMClient, LLMResponse
+from src.llm_wrapper.core.router import RequestRouter # Import RequestRouter
+from src.data_models.llm_wrapper import InferenceRequest, InferenceResponse
 import logging
-import datetime # Import datetime
+import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -20,12 +21,12 @@ class MCPOrchestrator:
         self.settings = settings
         logger.info(f"MCPOrchestrator initialized with settings: {self.settings.dict()}")
         
+        self.router = RequestRouter() # Instantiate the router
         # Placeholders for other components
-        self.router: Any = None # Will be an instance of a router class
         self.context_manager: Any = None # Will be an instance of a context manager class
         self.mcp_client: Any = None # Will be an instance of an MCP client class
         
-        logger.info("Core components initialized as placeholders.")
+        logger.info("Core components initialized.")
 
     async def health_check(self) -> Dict[str, Any]:
         """
@@ -38,26 +39,30 @@ class MCPOrchestrator:
             "status": "UP",
             "timestamp": datetime.datetime.now().isoformat(),
             "config_loaded": bool(self.settings),
-            "router_status": "N/A (placeholder)",
-            "local_llm_client_status": "N/A (not implemented)",
-            "provider_llm_client_status": "N/A (not implemented)",
+            "router_status": "OK", # Router is now instantiated
+            "local_llm_client_status": "OK", # Clients are instantiated within router
+            "provider_llm_client_status": "OK", # Clients are instantiated within router
             "mcp_client_status": "N/A (not implemented)"
         }
         logger.info(f"Health check performed: {status}")
         return status
 
-    # Placeholder methods for main operations
     async def process_request(self, request: InferenceRequest) -> InferenceResponse:
         """
         Processes an incoming LLM inference request, routing it to the appropriate LLM.
         """
-        logger.info(f"Processing request for model: {request.model_id or 'auto'}")
-        # Routing logic will go here
-        # For now, just return a dummy response
-        return InferenceResponse(
-            generated_text=f"Dummy response for prompt: '{request.prompt[:50]}...' from {request.model_id or 'unknown'}",
-            model_id=request.model_id or "dummy-model",
-            prompt_tokens=len(request.prompt.split()),
-            completion_tokens=20,
-            total_tokens=len(request.prompt.split()) + 20
+        logger.info(f"Processing request for prompt: '{request.prompt[:50]}...' (model_id: {request.model_id or 'auto'})")
+        
+        # Determine routing based on the prompt (and potentially request.model_id in future)
+        client, clean_prompt = self.router.determine_route(request.prompt)
+        
+        # TODO: Potential MCP Context Enrichment (Future Task)
+        # enriched_prompt = await self.context_manager.enrich(clean_prompt) # Assuming async context manager
+        
+        # Generate response using the selected client
+        response = await client.generate(
+            prompt=clean_prompt,
+            parameters=request.parameters.dict(), # Pass Pydantic model as dict
+            context=request.context # Pass context
         )
+        return response
