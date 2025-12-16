@@ -57,3 +57,9 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** Integration of `markdownlint-cli` into CI for documentation quality was proposed. However, the user expressed concerns over system overhead for LLM projects and prioritized implementing lighter backup options, leading to the deferral of this implementation.
 *   **Resolution:** Implementation of `markdownlint-cli` and related configuration deferred.
 *   **Impact:** Lack of automated documentation formatting and spell checking in CI. Requires manual checks for documentation quality. This highlights a need to re-evaluate lighter or Python-native alternatives for documentation linting in the future.
+
+### Issue ID: ERR-010
+*   **Issue:** Agent oversight: Failed to commit code immediately after marking a task as completed in `PLAN.md`.
+*   **Context:** After completing the documentation update for `PLAN.md` (marking Task 1.2 as completed), the agent failed to commit the associated code changes (`src/data_models/`). This led to a discrepancy between `PLAN.md`'s status and the actual committed codebase state.
+*   **Resolution:** The missing code was subsequently committed in a separate action. The agent will enhance its internal process to ensure code changes and corresponding documentation updates (like `PLAN.md` status changes) are committed synchronously, or at least that any pending code commits are highlighted immediately.
+*   **Impact:** Minor delay in development process due to necessary corrective action. Highlighted a need for stricter internal adherence to change management protocols for the agent.
