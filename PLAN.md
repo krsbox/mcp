@@ -1,14 +1,14 @@
-# Project Plan: LLM-Enhanced AWS MCP Servers
+# Project Plan: LLM-Enhanced Distributed MCP Servers
 
 ## Project Goal
-Implement a hybrid Large Language Model (LLM) system where a local LLM can boost and optimize provider LLMs, with both co-existing and running in parallel for an optimum developer experience. This core LLM integration will be preceded by a foundational wrapper phase, and subsequently followed by a suite of specialized Model Context Protocol (MCP) servers focusing on AWS-specific context and document management to create robust, LLM-enhanced applications leveraging AWS capabilities.
+Implement a hybrid Large Language Model (LLM) system where a local LLM can boost and optimize provider LLMs, with both co-existing and running in parallel for an optimum developer experience. This core LLM integration will be preceded by a foundational wrapper phase, and subsequently followed by a suite of specialized Model Context Protocol (MCP) servers focusing on cloud-neutral context and document management to create robust, LLM-enhanced applications leveraging distributed capabilities.
 
 ## Assumptions
 *   **Language:** Python
 *   **MCP Definition:** Model Context Protocol (standardized specification for model capabilities/configuration).
 *   **Core Focus:** Prioritize initial wrapper development, then hybrid LLM integration (local boosting provider), and foundational planning structures.
 *   **Parallel Execution:** Local and provider LLMs, along with MCP servers, will be designed to run in parallel for optimal developer experience.
-*   **AWS Services Integration:** AWS services will be integrated to enhance LLM capabilities via MCP.
+*   **Cloud Neutral Architecture:** The system will be designed to be cloud-neutral, avoiding vendor lock-in and allowing deployment across various cloud providers or on-premise environments.
 
 ## High-Level Roadmap
 
@@ -18,7 +18,7 @@ Implement a hybrid Large Language Model (LLM) system where a local LLM can boost
 4.  **Provider LLM Integration:** Integrate external provider LLMs and enhance the wrapper for parallel execution and optimization.
 5.  **MCP Foundational Elements:** Define MCP Data Models and the basic Server/Client Framework.
 6.  **Document Management System:** Implement capabilities for scanning, analyzing, and indexing documents for LLM context.
-7.  **AWS MCP Server Development:** Develop specialized MCP servers for AWS services.
+7.  **Distributed MCP Server Development:** Develop specialized MCP servers focusing on cloud-neutral services.
 8.  **Interactive Rules/Game Integration:** Implement interactive reasoning rules or game mechanics.
 9.  **Hybrid LLM/MCP Orchestration & Refinement:** Orchestrate the hybrid LLM system with MCP servers, and refine the overall architecture.
 10. **Testing & Optimization:** Comprehensive testing and performance optimization.
@@ -37,7 +37,7 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   Install core dependencies (`uv`, `pydantic` for config, `requests`, `httpx`).
 *   **Task 1.2: Define Core Project Data Models (Python using Pydantic)**
     *   **Status:** pending
-    *   Based on project needs and potential future "Plan" concepts, define Python data models (e.g., using Pydantic) for core entities such as `Plan`, `PlanStep`, `ProjectConfiguration`, and potentially foundational MCP-agnostic components.
+    *   Based on project needs and potential future "Plan" concepts, define Python data models (e.g., using Pydantic) for core entities suchs as `Plan`, `PlanStep`, `ProjectConfiguration`, and potentially foundational MCP-agnostic components.
 *   **Task 1.3: Implement Generic Workspace Inventory (auto_register.py)**
     *   **Status:** completed
     *   Develop `workspace-automation/src/auto_register.py` to scan the project directory, respect `.gitignore`, and generate `file_registry.json` and `SYSTEM_INVENTORY.md`.
@@ -116,17 +116,15 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   Implement `analyze_documents()` to process document content.
     *   Develop `VectorDocument` structure for documents with embeddings (to be populated by LLM phase).
 
-### Phase 7: AWS MCP Server Development
+### Phase 7: Distributed MCP Server Development
 **Status:** pending
 
-*   **Task 7.1: AWS DocumentDB MCP Server:**
+*   **Task 7.1: Cloud-Neutral MCP Server for Generic Services:**
     *   **Status:** pending
-    *   Develop an MCP server specifically for Amazon DocumentDB.
-    *   Implement tools for connection management, database operations, collection management, and document CRUD operations within DocumentDB.
-*   **Task 7.2: AWS Cloud Control API Resources MCP Server:**
+    *   Develop an MCP server to expose capabilities for generic distributed services, not tied to a specific cloud provider.
+*   **Task 7.2: Cloud-Specific MCP Server Examples (e.g., AWS, Azure, GCP):**
     *   **Status:** pending
-    *   Develop an MCP server to list and manage resources via the AWS Cloud Control API (`awscc`).
-    *   Expose capabilities to interact with various AWS services through this API.
+    *   Develop example MCP servers for specific cloud services (e.g., AWS DocumentDB, Azure Cosmos DB, GCP Firestore), demonstrating cloud-neutral design principles.
 
 ### Phase 8: Interactive Rules/Game Integration
 **Status:** pending
