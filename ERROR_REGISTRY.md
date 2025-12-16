@@ -45,3 +45,15 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** After installing `git-changelog` via `uv pip install git-changelog` and attempting to run it using `uv run git-changelog` (and `uv run python -m git_changelog`), the command initially failed with "No such file or directory" or "No module named".
 *   **Resolution:** Reinstalling `git-changelog` using `uv pip install git-changelog` resolved the issue, allowing `uv run git-changelog --output CHANGELOG.md` to execute successfully. This highlighted intricacies in `uv`'s environment management and executable paths.
 *   **Impact:** Temporarily delayed the initial generation of `CHANGELOG.md` and required troubleshooting of `uv` command invocation.
+
+### Issue ID: ERR-008
+*   **Issue:** Bandit SAST tool removed from CI due to reported system overhead.
+*   **Context:** Bandit was integrated into `python-ci.yml` for security scanning. However, the user reported concerns about the system overhead introduced by the scan, especially for an LLM project.
+*   **Resolution:** The Bandit scan step and its dependency (`bandit`) were removed from the CI workflow (`python-ci.yml`) and `requirements.txt` respectively, to reduce CI overhead.
+*   **Impact:** Automated SAST is currently not performed in CI, increasing reliance on manual security review. This highlights a need to re-evaluate lighter security scanning alternatives in the future that align with the project's performance requirements.
+
+### Issue ID: ERR-009
+*   **Issue:** Markdown linter (`markdownlint-cli`) implementation deferred due to system overhead concerns and prioritization of light backup options.
+*   **Context:** Integration of `markdownlint-cli` into CI for documentation quality was proposed. However, the user expressed concerns over system overhead for LLM projects and prioritized implementing lighter backup options, leading to the deferral of this implementation.
+*   **Resolution:** Implementation of `markdownlint-cli` and related configuration deferred.
+*   **Impact:** Lack of automated documentation formatting and spell checking in CI. Requires manual checks for documentation quality. This highlights a need to re-evaluate lighter or Python-native alternatives for documentation linting in the future.
