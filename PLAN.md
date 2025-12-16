@@ -37,7 +37,7 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   Install core dependencies (`uv`, `pydantic` for config, `requests`, `httpx`).
 *   **Task 1.2: Define Core Project Data Models (Python using Pydantic)**
     *   **Status:** pending
-    *   Based on project needs and potential future "Plan" concepts, define Python data models (e.g., using Pydantic) for core entities suchs as `Plan`, `PlanStep`, `ProjectConfiguration`, and potentially foundational MCP-agnostic components.
+    *   Based on the immediate need for the pre-LLM wrapper phase, define Python data models (e.g., using Pydantic) for core entities related to the wrapper's internal state, configuration, and its eventual interaction with a local LLM. This includes models for `WrapperConfig`, `LocalLLMConfig`, `ModelParameters`, `InferenceRequest`, and `InferenceResponse`.
 *   **Task 1.3: Implement Generic Workspace Inventory (auto_register.py)**
     *   **Status:** completed
     *   Develop `workspace-automation/src/auto_register.py` to scan the project directory, respect `.gitignore`, and generate `file_registry.json` and `SYSTEM_INVENTORY.md`.
