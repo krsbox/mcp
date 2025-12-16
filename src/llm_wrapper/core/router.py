@@ -1,20 +1,56 @@
 import re
-from typing import Tuple, List, Any
-from llm_wrapper.core.base import BaseLLMClient
+import logging
+from typing import Tuple, Any
+from llm_wrapper.core.base import BaseLLMClient, LLMResponse
 from llm_wrapper.providers.local_client import LocalCLIClient
 from llm_wrapper.providers.remote_client import ProviderSDKClient
-import logging
 
 logger = logging.getLogger(__name__)
 
 class RequestRouter:
-    """Traffic controller for LLM requests."""
+    """Traffic controller for LLM requests with fallback capabilities."""
     
-    def __init__(self):
-        # Instantiate clients once to reuse resources
-        self.local_client = LocalCLIClient()
-        self.provider_client = ProviderSDKClient()
-        logger.info("RequestRouter initialized with LocalCLIClient and ProviderSDKClient.")
+    def __init__(self, local_client: LocalCLIClient, provider_client: ProviderSDKClient):
+        # Clients are instantiated once and passed to the router
+        self.local_client = local_client
+        self.provider_client = provider_client
+        logger.info("RequestRouter initialized with provided LocalCLIClient and ProviderSDKClient instances.")
+
+    async def generate_with_fallback(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> LLMResponse:
+        """
+        Attempts execution on the preferred route. 
+        If local fails, automatically escalates to provider.
+        """
+        # 1. Determine the preferred route
+        target_client, clean_prompt = self.determine_route(prompt)
+        
+        # 2. Try preferred route
+        try:
+            response = await target_client.generate(clean_prompt, parameters, context)
+            
+            # Even if code runs, check for internal CLI errors (e.g. command not found)
+            # This check is specific to LocalCLIClient returning an error message in content
+            if target_client == self.local_client and "CLI Error:" in response.content:
+                raise RuntimeError(f"Local CLI execution reported an error: {response.content}")
+                
+            return response
+
+        except Exception as e:
+            # 3. Fallback Logic
+            if target_client == self.local_client:
+                logger.warning(f"Local client failed. Falling back to Provider SDK. Error: {e}")
+                
+                # Tag the prompt so the provider knows it's a fallback (optional)
+                fallback_prompt = f"[Local Fallback] {clean_prompt}"
+                try:
+                    return await self.provider_client.generate(fallback_prompt, parameters, context)
+                except Exception as provider_e:
+                    logger.error(f"Critical failure: Both Local and Provider routes failed. Provider error: {provider_e}")
+                    raise provider_e # Re-raise if provider also fails
+            
+            # If provider itself fails (or was the initial target and failed), we raise the error up
+            logger.error(f"Critical failure: Initial provider route failed. {e}")
+            raise e
 
     def determine_route(self, prompt: str) -> Tuple[BaseLLMClient, str]:
         """
@@ -46,7 +82,7 @@ class RequestRouter:
             r"\b(write a function|debug|refactor|python|javascript)\b",
             r"\b(solve|calculate|theorem|complex)\b",
             r"\b(analyze|summarize this 50 page)\b",
-            r"\b(generate code|implement solution)\b" # Added common coding-related phrases
+            r"\b(generate code|implement solution)\b"
         ]
         
         # If prompt is long (> 200 chars, reduced from 500 for more aggressive provider routing on verbosity)

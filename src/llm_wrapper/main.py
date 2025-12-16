@@ -1,7 +1,9 @@
 from typing import Any, Dict
 from src.llm_wrapper.core.config import settings
-from src.llm_wrapper.core.base import BaseLLMClient, LLMResponse
-from src.llm_wrapper.core.router import RequestRouter # Import RequestRouter
+from src.llm_wrapper.core.base import BaseLLMClient
+from src.llm_wrapper.core.router import RequestRouter
+from src.llm_wrapper.providers.local_client import LocalCLIClient # Import LocalCLIClient
+from src.llm_wrapper.providers.remote_client import ProviderSDKClient # Import ProviderSDKClient
 from src.data_models.llm_wrapper import InferenceRequest, InferenceResponse
 import logging
 import datetime
@@ -21,7 +23,11 @@ class MCPOrchestrator:
         self.settings = settings
         logger.info(f"MCPOrchestrator initialized with settings: {self.settings.dict()}")
         
-        self.router = RequestRouter() # Instantiate the router
+        # Instantiate clients and pass them to the router
+        self.local_client = LocalCLIClient()
+        self.provider_client = ProviderSDKClient()
+        self.router = RequestRouter(self.local_client, self.provider_client)
+        
         # Placeholders for other components
         self.context_manager: Any = None # Will be an instance of a context manager class
         self.mcp_client: Any = None # Will be an instance of an MCP client class
@@ -39,9 +45,9 @@ class MCPOrchestrator:
             "status": "UP",
             "timestamp": datetime.datetime.now().isoformat(),
             "config_loaded": bool(self.settings),
-            "router_status": "OK", # Router is now instantiated
-            "local_llm_client_status": "OK", # Clients are instantiated within router
-            "provider_llm_client_status": "OK", # Clients are instantiated within router
+            "router_status": "OK", 
+            "local_llm_client_status": "OK",
+            "provider_llm_client_status": "OK",
             "mcp_client_status": "N/A (not implemented)"
         }
         logger.info(f"Health check performed: {status}")
@@ -49,20 +55,14 @@ class MCPOrchestrator:
 
     async def process_request(self, request: InferenceRequest) -> InferenceResponse:
         """
-        Processes an incoming LLM inference request, routing it to the appropriate LLM.
+        Processes an incoming LLM inference request, routing it to the appropriate LLM with fallback.
         """
         logger.info(f"Processing request for prompt: '{request.prompt[:50]}...' (model_id: {request.model_id or 'auto'})")
         
-        # Determine routing based on the prompt (and potentially request.model_id in future)
-        client, clean_prompt = self.router.determine_route(request.prompt)
-        
-        # TODO: Potential MCP Context Enrichment (Future Task)
-        # enriched_prompt = await self.context_manager.enrich(clean_prompt) # Assuming async context manager
-        
-        # Generate response using the selected client
-        response = await client.generate(
-            prompt=clean_prompt,
-            parameters=request.parameters.dict(), # Pass Pydantic model as dict
-            context=request.context # Pass context
+        # Use the router's generate_with_fallback method
+        response = await self.router.generate_with_fallback(
+            prompt=request.prompt,
+            parameters=request.parameters.dict(),
+            context=request.context
         )
         return response
