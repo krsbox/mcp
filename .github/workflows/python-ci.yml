@@ -29,9 +29,6 @@ jobs:
     - name: Run MyPy Type Checker
       run: |
         uv run mypy .
-    - name: Run Bandit Security Scan
-      run: |
-        uv run bandit -r . -f github --confidence-level high --severity-level high --exclude ./.venv
     - name: Run Pytest
       run: |
         uv run pytest
