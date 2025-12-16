@@ -33,3 +33,9 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** While performing git status after updating `GEMINI.md`, it was observed that `backups/` was added to `.gitignore`. This change was not initiated by the agent.
 *   **Resolution:** The change was accepted as it is a reasonable addition to `.gitignore` for development practices related to project growth and backup management. No further action required from the agent regarding this specific entry.
 *   **Impact:** Minor. Ensures backup directories are not tracked by Git, which is a common and recommended practice.
+
+### Issue ID: ERR-006
+*   **Issue:** Manual error during editing led to unintended conversational text being included in `GEMINI.md`.
+*   **Context:** User was editing `GEMINI.md` and accidentally introduced extraneous conversational text. The user subsequently corrected the file.
+*   **Resolution:** User manually corrected the `GEMINI.md` file, removing the unintended content.
+*   **Impact:** Minor, as the error was promptly identified and corrected by the user. Reinforces the importance of careful manual editing of critical project documentation.
