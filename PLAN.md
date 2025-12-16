@@ -43,8 +43,11 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   Implement a `Config` class to load settings from environment variables (e.g., from `.env`) and a dedicated `mcp.json` file for MCP-specific configurations (e.g., server addresses, model mappings).
     *   Ensure secure handling of sensitive information.
 *   **Task 1.5: Implement Generic Workspace Inventory (auto_register.py)**
-    *   **Status:** in_progress
+    *   **Status:** completed
     *   Develop `workspace-automation/src/auto_register.py` to scan the project directory, respect `.gitignore`, and generate `file_registry.json` and `SYSTEM_INVENTORY.md`.
+*   **Task 1.6: Implement Light Local Backup Script (simple_backup.sh)**
+    *   **Status:** completed
+    *   Develop `simple_backup.sh` to create timestamped copies of essential project files/directories in a local `backups/simple_copies` folder.
 
 ### Phase 2: Document Management System
 **Status:** pending
