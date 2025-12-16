@@ -1,2 +1,6 @@
 pytest
 ruff
+requests
+httpx
+boto3
+mypy
