@@ -63,7 +63,7 @@ The following tasks are organized into phases, reflecting the detailed steps req
 **Status:** pending
 
 *   **Task 3.1: Local LLM Environment Setup:**
-    *   **Status:** pending
+    *   **Status:** completed
     *   Select and integrate a local LLM library (e.g., `ollama`, `llama-cpp-python`).
     *   Acquire and load a suitable tiny model.
 *   **Task 3.2: Integrate Local LLM into Wrapper:**
