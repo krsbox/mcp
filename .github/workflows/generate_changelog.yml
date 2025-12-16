@@ -1,0 +1,44 @@
+name: Generate Changelog
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  generate-changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Required to fetch all history for git-changelog
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' # Use a suitable Python version
+
+      - name: Install uv
+        run: |
+          pip install uv
+          echo "$HOME/.cargo/bin" >> $GITHUB_PATH # Add uv to PATH
+
+      - name: Install git-changelog
+        run: |
+          uv pip install git-changelog
+
+      - name: Generate Changelog
+        run: |
+          git-changelog --output CHANGELOG.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "docs(changelog): Update CHANGELOG.md" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

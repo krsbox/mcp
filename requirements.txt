@@ -4,3 +4,4 @@ requests
 httpx
 boto3
 mypy
+git-changelog

@@ -1,0 +1,29 @@
+# .git-changelog.yaml
+changelog_version: 2
+commit_style: conventional
+
+template: keepachangelog
+# Custom categories and sections
+sections:
+  - type: feat
+    section: Features
+  - type: fix
+    section: Bug Fixes
+  - type: docs
+    section: Documentation
+  - type: chore
+    section: Maintenance
+  - type: refactor
+    section: Refactoring
+  - type: perf
+    section: Performance Improvements
+  - type: style
+    section: Styles
+  - type: test
+    section: Tests
+  - type: build
+    section: Build System
+  - type: ci
+    section: CI/CD
+  - type: revert
+    section: Reverts
