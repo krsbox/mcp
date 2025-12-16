@@ -1,58 +1,62 @@
+**GEMINI.md**
+
+```markdown
 # Project Overview
 
-This directory contains the "AWS MCP Servers" project, a suite of specialized Model Context Protocol (MCP) servers designed to enhance LLM applications with AWS-specific context. The project aims to improve the quality of AI-generated outputs by providing relevant AWS documentation, best practices, and workflow automation capabilities. It leverages a client-server architecture where MCP clients (like AI coding assistants and chatbots) connect to MCP servers to access AWS capabilities. The core technology is the open-source Model Context Protocol.
+This directory contains the "AWS MCP Servers" project, a suite of specialized Model Context Protocol (MCP) servers designed to enhance Large Language Model (LLM) applications with AWS-specific context. The project aims to improve the quality of AI-generated outputs by providing relevant AWS documentation, best practices, and workflow automation capabilities. It utilizes a client-server architecture where MCP clients (such as AI coding assistants and chatbots) connect to MCP servers to access AWS capabilities. The core technology is the open-source Model Context Protocol.
 
-**Note:** While designed to *enhance LLM applications*, direct LLM implementation within this project is a future phase.
+**Note:** While the project is designed to *enhance LLM applications*, direct LLM implementation within this project is planned for a future phase.
 
 # Key Capabilities
 
-Based on the provided code snippets, the project aims to develop the following capabilities:
+Based on the provided code snippets, the project is designed to provide the following capabilities:
 
-*   **Document Management & Analysis:** Includes functionalities for listing, scanning, and analyzing documents. This involves services for document operations (`document_service`), handling vector documents, and future integration with LLMs (`get_llm()`, `get_search()`) and search engines (e.g., Elasticsearch).
-*   **Interactive Rules/Games:** Incorporates logic for "Lateral Thinking Puzzles" or "Turtle Soup" style games, where `rules()` and `rules_solver()` functions define game mechanics for interactive reasoning and knowledge exploration, often involving human-like interaction rules.
-*   **AWS MCP Servers:** Specialized servers for interacting with AWS services, such as:
-    *   **AWS DocumentDB MCP Server:** Provides tools for connection, database, collection, and document operations within Amazon DocumentDB.
-    *   **AWS Cloud Control API Resources Listing:** Tools for listing and managing resources via `awscc` provider, indicating broad AWS service integration.
+- **Document Management & Analysis:** Features for listing, scanning, and analyzing documents, including services for document operations (`document_service`), handling vector documents, and planned integration with LLMs (`get_llm()`, `get_search()`) and search engines (e.g., Elasticsearch).
+- **Interactive Rules/Games:** Implements logic for "Lateral Thinking Puzzles" or "Turtle Soup" style games, with `rules()` and `rules_solver()` functions defining mechanics for interactive reasoning and knowledge exploration, often following human-like interaction guidelines.
+- **AWS MCP Servers:** Specialized servers for interacting with AWS services, such as:
+    - **AWS DocumentDB MCP Server:** Offers tools for connection, as well as database, collection, and document operations within Amazon DocumentDB.
+    - **AWS Cloud Control API Resources Listing:** Tools for listing and managing resources via the `awscc` provider, indicating extensive AWS service integration.
 
 # Key Technologies
 
-*   **Model Context Protocol (MCP):** An open protocol for integrating LLM applications with external data sources and tools.
-*   **AWS Services:** The servers provide contextual knowledge and integration with various AWS services, including DocumentDB and Cloud Control API.
-*   **Python:** Implied as the primary development language, with `uv` and `uvx` used for dependency management.
-*   **Elasticsearch (Planned):** Indications of integration with Elasticsearch for document indexing and search.
+- **Model Context Protocol (MCP):** An open protocol for integrating LLM applications with external data sources and tools.
+- **AWS Services:** The servers provide contextual knowledge and integration with various AWS services, including DocumentDB and the Cloud Control API.
+- **Python:** Implied as the primary development language, with `uv` and `uvx` used for dependency management.
+- **Elasticsearch (Planned):** Indicated integration with Elasticsearch for document indexing and search.
 
 # Building and Running
 
-The installation and setup generally involve:
+The installation and setup process generally includes:
 
-1.  **Installing `uv`:** From Astral, as the package manager.
-    `uv python install 3.10`
-2.  **Installing Python:** Using `uv`.
-3.  **Configuring AWS Credentials:** With access to required services.
-4.  **Adding the server to your MCP client configuration:** Specific instructions vary by client (Amazon Q Developer CLI, Kiro, Cline, Cursor, Windsurf, VS Code, Claude Code).
+1. **Installing `uv`:** Obtain from Astral, as the package manager.  
+   `uv python install 3.10`
+2. **Installing Python:** Using `uv`.
+3. **Configuring AWS Credentials:** Ensure access to required AWS services.
+4. **Adding the server to your MCP client configuration:**  
+   Specific instructions vary by client (Amazon Q Developer CLI, Kiro, Cline, Cursor, Windsurf, VS Code, Claude Code). Detailed configuration examples for various MCP clients (as displayed by `gh repo view`) typically involve creating a JSON configuration file (e.g., `~/.aws/amazonq/mcp.json`, `kiro_mcp_settings.json`, `.cursor/mcp.json`, etc.) with server definitions.
 
-Detailed configuration examples for various MCP clients (e.g., Amazon Q Developer CLI, Kiro, Cline, Cursor, Windsurf, VS Code, Claude Code) are provided in the project's main documentation (which was displayed by `gh repo view`). These typically involve creating a JSON configuration file (e.g., `~/.aws/amazonq/mcp.json`, `kiro_mcp_settings.json`, `.cursor/mcp.json`, etc.) with server definitions.
-
-Individual server READMEs (located in `src/<server-name>/README.md`) contain specific installation requirements and configuration options.
+Individual server READMEs (located in `src/<server-name>/README.md`) provide additional installation requirements and configuration details.
 
 # Development Conventions
 
-*   **Contributing:** Refer to `CONTRIBUTING.md` for guidelines on contributing to the project.
-*   **Adding New MCP Servers:** A `DEVELOPER_GUIDE.md` is available for guidance on adding new MCP servers to the library.
-*   **Design Guidelines:** Adherence to `DESIGN_GUIDELINES.md` is expected when developing new servers.
-*   **Security:** Information regarding security issue notifications is available in `CONTRIBUTING.md#security-issue-notifications`.
+- **Contributing:** Refer to `CONTRIBUTING.md` for guidelines on contributing to the project.
+- **Adding New MCP Servers:** See `DEVELOPER_GUIDE.md` for guidance on adding new MCP servers to the library.
+- **Design Guidelines:** Adherence to `DESIGN_GUIDELINES.md` is expected when developing new servers.
+- **Security:** Information regarding security issue notifications is available in `CONTRIBUTING.md#security-issue-notifications`.
 
 # AI Interaction
 
-This `GEMINI.md` file will be used by the AI agent to understand the project's structure, purpose, and conventions for tasks such as answering questions, implementing features, fixing bugs, and refactoring code. Please avoid manual edits to this file, as they may be overwritten during AI analysis and updates.
+This `GEMINI.md` file is used by the AI agent to understand the project's structure, purpose, and conventions for tasks such as answering questions, implementing features, fixing bugs, and refactoring code. Please avoid manual edits to this file, as they may be overwritten during AI analysis and updates.
 
 # Project Documentation
 
-This section provides links to key project-specific documentation generated by the AI agent to provide comprehensive context and track progress.
+Below are links to key project-specific documentation generated by the AI agent to provide comprehensive context and track progress:
 
-*   **[PLAN.md](PLAN.md):** Details the project plan, high-level roadmap, and current task list (todos) for the "Hybrid LLM System with MCP Orchestration" project.
-*   **[ERROR_REGISTRY.md](ERROR_REGISTRY.md):** Contains a registry of significant errors and issues encountered during development, including their context, resolution, and impact.
-*   **[CHANGELOG.md](CHANGELOG.md):** Documents the history of project evolution, including significant changes, new features, and bug fixes.
-*   **[CHECKLIST_DEVELOPMENT.md](CHECKLIST_DEVELOPMENT.md):** Outlines the standard steps for executing development tasks, ensuring consistency and quality.
-*   **[CHECKLIST_CODE_REVIEW.md](CHECKLIST_CODE_REVIEW.md):** Provides a structured approach for conducting code reviews to maintain code quality and adherence to best practices.
-*   **[CHECKLIST_PROJECT_GROWTH.md](CHECKLIST_PROJECT_GROWTH.md):** Offers guidelines for developing and maintaining the project with a focus on sustainable growth, scalability, and extensibility.
+- **[PLAN.md](PLAN.md):** Details the project plan, high-level roadmap, and current task list (to-dos) for the "Hybrid LLM System with MCP Orchestration" project.
+- **[ERROR_REGISTRY.md](ERROR_REGISTRY.md):** Contains a registry of significant errors and issues encountered during development, including their context, resolution, and impact.
+- **[CHANGELOG.md](CHANGELOG.md):** Documents the history of project evolution, including significant changes, new features, and bug fixes.
+- **[CHECKLIST_DEVELOPMENT.md](CHECKLIST_DEVELOPMENT.md):** Outlines the standard steps for executing development tasks, ensuring consistency and quality.
+- **[CHECKLIST_CODE_REVIEW.md](CHECKLIST_CODE_REVIEW.md):** Provides a structured approach for conducting code reviews to maintain code quality and adherence to best practices.
+- **[CHECKLIST_PROJECT_GROWTH.md](CHECKLIST_PROJECT_GROWTH.md):** Offers guidelines for developing and maintaining the project with a focus on sustainable growth, scalability, and extensibility.
+
+```
