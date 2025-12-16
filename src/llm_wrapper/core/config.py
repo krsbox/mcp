@@ -8,10 +8,14 @@ class Settings(BaseSettings):
     # Provider Keys
     openai_api_key: Optional[str] = None
     anthropic_api_key: Optional[str] = None
+    google_api_key: Optional[str] = None # Added Google API Key
     
     # Local Provider Config
     ollama_base_url: str = "http://localhost:11434"
     default_local_model: str = "llama3"
+    
+    # Remote Provider Config
+    provider_model_name: str = "gemini-pro" # Added default provider model name
     
     # MCP Settings
     mcp_server_timeout: int = 30

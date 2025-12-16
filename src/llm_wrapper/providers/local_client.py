@@ -1,37 +1,38 @@
-from src.llm_wrapper.core.base import BaseLLMClient, LLMResponse
-from src.data_models.llm_wrapper import LocalLLMConfig
+import subprocess
+from llm_wrapper.core.base import BaseLLMClient, LLMResponse
 from typing import Dict, Any, List, AsyncGenerator
 
-class LocalLLMClient(BaseLLMClient):
-    """
-    Placeholder for the LocalLLMClient.
-    Manages interaction with a local LLM (e.g., via Ollama/LM Studio APIs, or direct process invocation).
-    """
-    def __init__(self, config: LocalLLMConfig):
-        self.config = config
-        print(f"Placeholder LocalLLMClient initialized for model: {config.model_name}")
-
+class LocalCLIClient(BaseLLMClient):
+    """Wrapper for the 'gemini -p' bash command."""
+    
     async def generate(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> LLMResponse:
-        """
-        Placeholder: Sends a request to the local LLM and returns a standardized response.
-        """
-        print(f"Placeholder LocalLLMClient: Generating response for prompt: '{prompt[:50]}...'")
-        # In future, this would integrate with a local LLM library
-        return LLMResponse(content=f"Local LLM dummy response for '{prompt[:30]}'", model=self.config.model_name)
+        try:
+            # Executes: gemini -p "your prompt"
+            # TODO: Incorporate parameters and context into the CLI command if supported by `gemini -p`
+            result = subprocess.run(
+                ["gemini", "-p", prompt],
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            return LLMResponse(
+                content=result.stdout.strip(),
+                model="gemini-cli-local",
+                raw_response=result.stdout
+            )
+        except subprocess.CalledProcessError as e:
+            # TODO: Define specific error types for better handling
+            return LLMResponse(content=f"Error: {e.stderr}", model="gemini-cli-local")
+        except Exception as e:
+            return LLMResponse(content=f"Unexpected error: {str(e)}", model="gemini-cli-local")
 
     async def stream(self, prompt: str, parameters: Dict[str, Any] = None, context: List[Dict] = None) -> AsyncGenerator[str, None]:
-        """
-        Placeholder: Streams the local LLM response tokens.
-        """
-        print(f"Placeholder LocalLLMClient: Streaming response for prompt: '{prompt[:50]}...'")
-        yield "Local "
-        yield "streaming "
-        yield "dummy "
-        yield "response."
+        # The `gemini -p` command does not inherently support streaming in a simple subprocess.run fashion.
+        # This would require more advanced subprocess management (e.g., Popen, reading stdout line by line).
+        # For now, we will generate the full response and yield it as a single chunk.
+        response = await self.generate(prompt, parameters, context)
+        yield response.content
 
     async def list_models(self) -> List[str]:
-        """
-        Placeholder: Lists available local LLM models.
-        """
-        print("Placeholder LocalLLMClient: Listing models.")
-        return [self.config.model_name]
+        # The local CLI typically only "uses" one configured model or an implicit default.
+        return ["gemini-cli-local"]
