@@ -37,5 +37,8 @@ This checklist provides a structured approach for conducting code reviews, aimin
 ## Before Approval
 
 *   [ ] **Build & Lint Checks:** Have all automated build, linting, and type-checking steps passed successfully?
+
 *   [ ] **No Unnecessary Changes:** Are there any unrelated changes, commented-out code, or temporary debugging statements that should be removed?
+
 *   [ ] **No Credentials/Sensitive Info:** Are there any hardcoded credentials or sensitive information?
+
