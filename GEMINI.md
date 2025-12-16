@@ -3,24 +3,24 @@
 ```markdown
 # Project Overview
 
-This directory contains the "AWS MCP Servers" project, a suite of specialized Model Context Protocol (MCP) servers designed to enhance Large Language Model (LLM) applications with AWS-specific context. The project aims to improve the quality of AI-generated outputs by providing relevant AWS documentation, best practices, and workflow automation capabilities. It utilizes a client-server architecture where MCP clients (such as AI coding assistants and chatbots) connect to MCP servers to access AWS capabilities. The core technology is the open-source Model Context Protocol.
+This directory contains the "LLM-Enhanced Distributed MCP Servers" project, a suite of specialized Model Context Protocol (MCP) servers designed to enhance Large Language Model (LLM) applications with cloud-neutral context. The project aims to improve the quality of AI-generated outputs by providing relevant documentation, best practices, and workflow automation capabilities across various cloud environments. It utilizes a client-server architecture where MCP clients (such as AI coding assistants and chatbots) connect to MCP servers to access distributed capabilities. The core technology is the open-source Model Context Protocol.
 
 **Note:** While the project is designed to *enhance LLM applications*, direct LLM implementation within this project is planned for a future phase.
 
 # Key Capabilities
 
-Based on the provided code snippets, the project is designed to provide the following capabilities:
+Based on the provided code snippets and updated project scope, the project is designed to provide the following capabilities:
 
 - **Document Management & Analysis:** Features for listing, scanning, and analyzing documents, including services for document operations (`document_service`), handling vector documents, and planned integration with LLMs (`get_llm()`, `get_search()`) and search engines (e.g., Elasticsearch).
 - **Interactive Rules/Games:** Implements logic for "Lateral Thinking Puzzles" or "Turtle Soup" style games, with `rules()` and `rules_solver()` functions defining mechanics for interactive reasoning and knowledge exploration, often following human-like interaction guidelines.
-- **AWS MCP Servers:** Specialized servers for interacting with AWS services, such as:
-    - **AWS DocumentDB MCP Server:** Offers tools for connection, as well as database, collection, and document operations within Amazon DocumentDB.
-    - **AWS Cloud Control API Resources Listing:** Tools for listing and managing resources via the `awscc` provider, indicating extensive AWS service integration.
+- **Distributed MCP Servers:** Specialized servers for interacting with various distributed services, with examples for specific cloud providers (e.g., AWS DocumentDB, AWS Cloud Control API, etc.).
+    - **Cloud-Neutral Service Integration:** Tools for integrating with generic distributed services.
+    - **Cloud-Specific Examples:** Demonstrations for services like Amazon DocumentDB and Cloud Control API.
 
 # Key Technologies
 
 - **Model Context Protocol (MCP):** An open protocol for integrating LLM applications with external data sources and tools.
-- **AWS Services:** The servers provide contextual knowledge and integration with various AWS services, including DocumentDB and the Cloud Control API.
+- **Cloud-Neutral Design:** Emphasizes architecture and implementation that avoids vendor lock-in.
 - **Python:** Implied as the primary development language, with `uv` and `uvx` used for dependency management.
 - **Elasticsearch (Planned):** Indicated integration with Elasticsearch for document indexing and search.
 
