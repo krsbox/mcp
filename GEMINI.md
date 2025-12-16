@@ -1,0 +1,34 @@
+# Project Overview
+
+This directory contains the "AWS MCP Servers" project, a suite of specialized Model Context Protocol (MCP) servers designed to enhance LLM applications with AWS-specific context. The project aims to improve the quality of AI-generated outputs by providing relevant AWS documentation, best practices, and workflow automation capabilities. It leverages a client-server architecture where MCP clients (like AI coding assistants and chatbots) connect to MCP servers to access AWS capabilities. The core technology is the open-source Model Context Protocol.
+
+# Key Technologies
+
+*   **Model Context Protocol (MCP):** An open protocol for integrating LLM applications with external data sources and tools.
+*   **AWS Services:** The servers provide contextual knowledge and integration with various AWS services.
+*   **Python:** Implied as the primary development language, with `uv` and `uvx` used for dependency management.
+
+# Building and Running
+
+The installation and setup generally involve:
+
+1.  **Installing `uv`:** From Astral, as the package manager.
+    `uv python install 3.10`
+2.  **Installing Python:** Using `uv`.
+3.  **Configuring AWS Credentials:** With access to required services.
+4.  **Adding the server to your MCP client configuration:** Specific instructions vary by client (Amazon Q Developer CLI, Kiro, Cline, Cursor, Windsurf, VS Code, Claude Code).
+
+Detailed configuration examples for various MCP clients (e.g., Amazon Q Developer CLI, Kiro, Cline, Cursor, Windsurf, VS Code, Claude Code) are provided in the project's main documentation (which was displayed by `gh repo view`). These typically involve creating a JSON configuration file (e.g., `~/.aws/amazonq/mcp.json`, `kiro_mcp_settings.json`, `.cursor/mcp.json`, etc.) with server definitions.
+
+Individual server READMEs (located in `src/<server-name>/README.md`) contain specific installation requirements and configuration options.
+
+# Development Conventions
+
+*   **Contributing:** Refer to `CONTRIBUTING.md` for guidelines on contributing to the project.
+*   **Adding New MCP Servers:** A `DEVELOPER_GUIDE.md` is available for guidance on adding new MCP servers to the library.
+*   **Design Guidelines:** Adherence to `DESIGN_GUIDELINES.md` is expected when developing new servers.
+*   **Security:** Information regarding security issue notifications is available in `CONTRIBUTING.md#security-issue-notifications`.
+
+# AI Interaction
+
+This `GEMINI.md` file will be used by the AI agent to understand the project's structure, purpose, and conventions for tasks such as answering questions, implementing features, fixing bugs, and refactoring code. Please avoid manual edits to this file, as they may be overwritten during AI analysis and updates.
