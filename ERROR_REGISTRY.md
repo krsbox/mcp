@@ -27,3 +27,9 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** Attempt to push to `https://github.com/krsbox/mcp.git` after changing the remote URL.
 *   **Resolution:** Explained that the repository `krsbox/mcp.git` did not exist on GitHub. The user was instructed to create an empty public or private repository, which they then did, providing the correct URL `https://github.com/krsbox/mcp.git` (which then worked via HTTPS).
 *   **Impact:** Confirmed the necessity of creating the GitHub repository before attempting to push to it. Clarified the process for setting up a new remote repository.
+
+### Issue ID: ERR-005
+*   **Issue:** `backups/` directory manually added to `.gitignore`.
+*   **Context:** While performing git status after updating `GEMINI.md`, it was observed that `backups/` was added to `.gitignore`. This change was not initiated by the agent.
+*   **Resolution:** The change was accepted as it is a reasonable addition to `.gitignore` for development practices related to project growth and backup management. No further action required from the agent regarding this specific entry.
+*   **Impact:** Minor. Ensures backup directories are not tracked by Git, which is a common and recommended practice.
