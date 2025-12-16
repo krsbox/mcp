@@ -1,7 +1,13 @@
 {
-    "timestamp": "2025-12-16 15:44:12.870992",
+    "timestamp": "2025-12-17 03:31:51.648385",
     "scanned_path": "/media/sunil-kr/storage/project",
     "files": [
+        {
+            "path": ".git-changelog.yaml",
+            "size_bytes": 575,
+            "last_modified": "2025-12-16 16:05:40.307606",
+            "file_type": ".yaml"
+        },
         {
             "path": ".github/PULL_REQUEST_TEMPLATE.md",
             "size_bytes": 3161,
@@ -21,9 +27,15 @@
             "file_type": ".yml"
         },
         {
+            "path": ".github/workflows/generate_changelog.yml",
+            "size_bytes": 1206,
+            "last_modified": "2025-12-16 16:06:53.547328",
+            "file_type": ".yml"
+        },
+        {
             "path": ".github/workflows/python-ci.yml",
             "size_bytes": 667,
-            "last_modified": "2025-12-16 14:51:34.032983",
+            "last_modified": "2025-12-16 16:41:44.714467",
             "file_type": ".yml"
         },
         {
@@ -34,8 +46,8 @@
         },
         {
             "path": "CHANGELOG.md",
-            "size_bytes": 1196,
-            "last_modified": "2025-12-16 15:01:35.792964",
+            "size_bytes": 797,
+            "last_modified": "2025-12-16 16:10:26.089395",
             "file_type": ".md"
         },
         {
@@ -57,34 +69,238 @@
             "file_type": ".md"
         },
         {
+            "path": "CONTRIBUTING.md",
+            "size_bytes": 5909,
+            "last_modified": "2025-12-16 17:39:36.042892",
+            "file_type": ".md"
+        },
+        {
             "path": "ERROR_REGISTRY.md",
-            "size_bytes": 3226,
-            "last_modified": "2025-12-16 14:48:42.457698",
+            "size_bytes": 6999,
+            "last_modified": "2025-12-16 19:29:15.823315",
             "file_type": ".md"
         },
         {
             "path": "GEMINI.md",
-            "size_bytes": 5313,
-            "last_modified": "2025-12-16 15:25:00.943003",
+            "size_bytes": 6558,
+            "last_modified": "2025-12-16 18:48:40.671478",
             "file_type": ".md"
         },
         {
             "path": "PLAN.md",
-            "size_bytes": 6327,
-            "last_modified": "2025-12-16 15:26:58.025187",
+            "size_bytes": 10709,
+            "last_modified": "2025-12-17 03:16:03.948388",
             "file_type": ".md"
         },
         {
+            "path": "SYSTEM_INVENTORY.md",
+            "size_bytes": 6305,
+            "last_modified": "2025-12-17 02:35:08.202060",
+            "file_type": ".md"
+        },
+        {
+            "path": "pre_edit_backup.sh",
+            "size_bytes": 2528,
+            "last_modified": "2025-12-16 17:38:12.759465",
+            "file_type": ".sh"
+        },
+        {
             "path": "requirements.txt",
-            "size_bytes": 37,
-            "last_modified": "2025-12-16 11:28:18.941508",
+            "size_bytes": 100,
+            "last_modified": "2025-12-16 21:56:54.388787",
             "file_type": ".txt"
+        },
+        {
+            "path": "simple_backup.sh",
+            "size_bytes": 2476,
+            "last_modified": "2025-12-16 16:52:53.809351",
+            "file_type": ".sh"
+        },
+        {
+            "path": "src/data_models/__init__.py",
+            "size_bytes": 80,
+            "last_modified": "2025-12-16 19:15:49.146524",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/data_models/llm_wrapper.py",
+            "size_bytes": 4003,
+            "last_modified": "2025-12-16 19:17:38.995564",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/__init__.py",
+            "size_bytes": 30,
+            "last_modified": "2025-12-16 19:54:34.275262",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/core/__init__.py",
+            "size_bytes": 35,
+            "last_modified": "2025-12-16 19:55:33.584771",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/core/base.py",
+            "size_bytes": 2231,
+            "last_modified": "2025-12-16 20:01:20.342050",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/core/config.py",
+            "size_bytes": 825,
+            "last_modified": "2025-12-16 21:35:20.692404",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/core/router.py",
+            "size_bytes": 4832,
+            "last_modified": "2025-12-16 21:44:43.701082",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/main.py",
+            "size_bytes": 4708,
+            "last_modified": "2025-12-16 22:36:38.479598",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/__init__.py",
+            "size_bytes": 34,
+            "last_modified": "2025-12-16 19:57:34.940223",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/client.py",
+            "size_bytes": 1995,
+            "last_modified": "2025-12-16 21:58:26.135515",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/manager.py",
+            "size_bytes": 3332,
+            "last_modified": "2025-12-16 22:14:31.931500",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/tools.py",
+            "size_bytes": 1053,
+            "last_modified": "2025-12-16 20:08:33.149940",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/providers/__init__.py",
+            "size_bytes": 40,
+            "last_modified": "2025-12-16 19:56:24.849322",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/providers/local_client.py",
+            "size_bytes": 2111,
+            "last_modified": "2025-12-16 20:58:21.091881",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/providers/remote_client.py",
+            "size_bytes": 2735,
+            "last_modified": "2025-12-16 21:38:42.457092",
+            "file_type": ".py"
+        },
+        {
+            "path": "workspace-automation/file_registry.json",
+            "size_bytes": 10471,
+            "last_modified": "2025-12-17 02:09:36.236491",
+            "file_type": ".json"
         },
         {
             "path": "workspace-automation/src/auto_register.py",
             "size_bytes": 5371,
             "last_modified": "2025-12-16 15:26:09.151838",
             "file_type": ".py"
+        },
+        {
+            "path": "benchmark_orchestrator.py",
+            "size_bytes": 13009,
+            "last_modified": "2025-12-17 00:41:58.279997",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/core/enricher.py",
+            "size_bytes": 2337,
+            "last_modified": "2025-12-16 22:32:43.697410",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/llm/local_client.py",
+            "size_bytes": 10307,
+            "last_modified": "2025-12-16 23:32:15.594797",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/llm/provider_client.py",
+            "size_bytes": 8176,
+            "last_modified": "2025-12-16 23:45:25.152130",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/client_manager.py",
+            "size_bytes": 14733,
+            "last_modified": "2025-12-17 01:05:36.596287",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/config.py",
+            "size_bytes": 8775,
+            "last_modified": "2025-12-17 01:23:28.313283",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/doc_manager_server.py",
+            "size_bytes": 10554,
+            "last_modified": "2025-12-16 23:58:41.945423",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/game_rules_server.py",
+            "size_bytes": 16118,
+            "last_modified": "2025-12-17 00:12:35.575360",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/interfaces.py",
+            "size_bytes": 2030,
+            "last_modified": "2025-12-16 23:16:46.656712",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/resilience.py",
+            "size_bytes": 10928,
+            "last_modified": "2025-12-17 00:52:16.256606",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/stdio_client.py",
+            "size_bytes": 7434,
+            "last_modified": "2025-12-16 23:11:22.500814",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/mcp/system_utility_server.py",
+            "size_bytes": 9674,
+            "last_modified": "2025-12-17 01:16:52.855195",
+            "file_type": ".py"
+        },
+        {
+            "path": "src/llm_wrapper/orchestrator.py",
+            "size_bytes": 13897,
+            "last_modified": "2025-12-17 01:28:05.216778",
+            "file_type": ".py"
+        },
+        {
+            "path": "workspace_sync.sh",
+            "size_bytes": 1775,
+            "last_modified": "2025-12-17 03:25:57.269063",
+            "file_type": ".sh"
         }
     ],
     "directories": [
@@ -95,14 +311,35 @@
             "path": ".github/workflows"
         },
         {
+            "path": "src/data_models"
+        },
+        {
+            "path": "src/llm_wrapper"
+        },
+        {
+            "path": "src/llm_wrapper/core"
+        },
+        {
+            "path": "src/llm_wrapper/mcp"
+        },
+        {
+            "path": "src/llm_wrapper/providers"
+        },
+        {
+            "path": "workspace-automation"
+        },
+        {
             "path": "workspace-automation/src"
+        },
+        {
+            "path": "src/llm_wrapper/llm"
         },
         {
             "path": "."
         }
     ],
     "summary": {
-        "total_files": 14,
-        "total_directories": 4
+        "total_files": 50,
+        "total_directories": 11
     }
 }

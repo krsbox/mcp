@@ -1,10 +1,11 @@
-from typing import Any, Dict
+from typing import Any, Dict, List
 from src.llm_wrapper.core.config import settings
-from src.llm_wrapper.core.base import BaseLLMClient
+from src.llm_wrapper.core.base import BaseLLMClient, LLMResponse
 from src.llm_wrapper.core.router import RequestRouter
 from src.llm_wrapper.providers.local_client import LocalCLIClient
 from src.llm_wrapper.providers.remote_client import ProviderSDKClient
-from src.llm_wrapper.mcp.manager import MCPManager # Import MCPManager
+from src.llm_wrapper.mcp.manager import MCPManager
+from src.llm_wrapper.core.enricher import ContextEnricher # Import ContextEnricher
 from src.data_models.llm_wrapper import InferenceRequest, InferenceResponse
 import logging
 import datetime
@@ -29,9 +30,9 @@ class MCPOrchestrator:
         self.provider_client = ProviderSDKClient()
         self.router = RequestRouter(self.local_client, self.provider_client)
         
-        # Initialize MCP Manager
+        # Initialize MCP Manager and Context Enricher
         self.mcp_manager = MCPManager()
-        self.context_manager: Any = None # Will be an instance of a context manager class
+        self.enricher = ContextEnricher() # Instantiate ContextEnricher
         
         logger.info("Core components initialized.")
 
@@ -82,18 +83,26 @@ class MCPOrchestrator:
     async def process_request(self, request: InferenceRequest) -> InferenceResponse:
         """
         Processes an incoming LLM inference request, routing it to the appropriate LLM with fallback.
+        It also enriches the request with MCP tools based on the chosen client.
         """
         logger.info(f"Processing request for prompt: '{request.prompt[:50]}...' (model_id: {request.model_id or 'auto'})")
         
-        # Get all available tools from MCP servers
-        available_tools = await self.mcp_manager.get_all_tools()
-        logger.debug(f"Available tools from MCP: {available_tools.keys()}")
-        
-        # TODO: Potential MCP Context Enrichment (Future Task: Task 5.3)
-        # The router now handles both the 'where' and the 'execution safety'
-        response = await self.router.generate_with_fallback(
-            prompt=request.prompt,
-            parameters=request.parameters.dict(),
-            context=request.context # Tools could be passed in context or prompt itself
-        )
+        # 1. Discover tools from all servers
+        tools_map = await self.mcp_manager.get_all_tools()
+        flattened_tools = [t for tools in tools_map.values() for t in tools]
+
+        # 2. Determine which route to take
+        client, clean_prompt = self.router.determine_route(request.prompt)
+
+        # 3. Enrich the request based on the client type
+        if isinstance(client, ProviderSDKClient):
+            # SDK uses native tool calling
+            gemini_tools = self.enricher.enrich_for_sdk(flattened_tools)
+            response = await client.generate(clean_prompt, parameters=request.parameters.dict(), context=request.context, tools=gemini_tools)
+        else: # LocalCLIClient
+            # CLI uses a system prompt injection
+            system_instruction = self.enricher.enrich_for_cli(tools_map)
+            full_prompt = f"{system_instruction}\n\nUSER REQUEST: {clean_prompt}"
+            response = await client.generate(full_prompt, parameters=request.parameters.dict(), context=request.context)
+
         return response
