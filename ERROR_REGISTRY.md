@@ -1,6 +1,6 @@
 # Error Registry
 
-This document tracks significant errors and issues encountered during the project development, along with their context, resolution, and impact.
+This document tracks significant errors and issues encountered during the project development, along with their context, resolution, and impact. This registry is specifically for documenting *problems* and their resolutions, distinct from the `AGENT_LOG.md` which records *all significant actions* taken by the agent.
 
 ## Identified Issues
 
