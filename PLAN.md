@@ -22,13 +22,14 @@ Implement a hybrid Large Language Model (LLM) system where a local LLM can boost
 8.  **Interactive Rules/Game Integration:** Implement interactive reasoning rules or game mechanics.
 9.  **Hybrid LLM/MCP Orchestration & Refinement:** Orchestrate the hybrid LLM system with MCP servers, and refine the overall architecture.
 10. **Testing & Optimization:** Comprehensive testing and performance optimization.
+11. **Workflow Unification & Automation:** Streamline project management, backups, and change tracking.
 
 ## Detailed Plan & Todo List
 
 The following tasks are organized into phases, reflecting the detailed steps required to achieve the project goal.
 
 ### Phase 1: Foundational Setup & Project Structure
-**Status:** completed
+**Status:** pending
 
 *   **Task 1.1: Project Setup & Virtual Environment**
     *   **Status:** completed
@@ -43,6 +44,7 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   Develop `workspace-automation/src/auto_register.py` to scan the project directory, respect `.gitignore`, and generate `file_registry.json` and `SYSTEM_INVENTORY.md`.
 *   **Task 1.4: Implement Light Local Backup Script (simple_backup.sh)**
     *   **Status:** completed
+    *   **Note:** This script has been deprecated and moved to `backups/deprecated_scripts/` as the backup strategy now exclusively relies on `pre_edit_backup.sh`.
     *   Develop `simple_backup.sh` to create timestamped copies of essential project files/directories in a local `backups/simple_copies` folder.
 *   **Task 1.5: Implement Pre-Edit Backup Helper Script (pre_edit_backup.sh)**
     *   **Status:** completed
@@ -117,50 +119,72 @@ The following tasks are organized into phases, reflecting the detailed steps req
     *   Develop `VectorDocument` structure for documents with embeddings (to be populated by LLM phase).
 
 ### Phase 7: Distributed MCP Server Development
-**Status:** in_progress
+**Status:** pending
 
-*   **Task 7.1: Cloud-Neutral MCP Server for Generic Services:**
+*   **Task 7.1: Cloud-Neutral MCP Server for Generic Services**
     *   **Status:** completed
     *   **Note:** Implemented with `SystemUtilityServer` providing sandboxed file operations.
     *   Develop an MCP server to expose capabilities for generic distributed services, not tied to a specific cloud provider.
-*   **Task 7.2: Cloud-Specific MCP Server Examples (e.g., AWS, Azure, GCP):**
+*   **Task 7.2: Cloud-Specific MCP Server Examples (e.g., AWS, Azure, GCP)**
     *   **Status:** pending
     *   Develop example MCP servers for specific cloud services (e.g., AWS DocumentDB, Azure Cosmos DB, GCP Firestore), demonstrating cloud-neutral design principles.
 
 ### Phase 8: Interactive Rules/Game Integration
 **Status:** completed
 
-*   **Task 8.1: Implement Lateral Thinking Puzzle/Turtle Soup Game Rules:**
+*   **Task 8.1: Implement Lateral Thinking Puzzle/Turtle Soup Game Rules**
     *   **Status:** completed
     *   Develop `rules()` and `rules_solver()` functions to define the game mechanics.
     *   Focus on managing game state and player interactions (e.g., yes/no/irrelevant questions).
 
 ### Phase 9: Hybrid LLM/MCP Orchestration & Refinement
-**Status:** in_progress
+**Status:** pending
 
-*   **Task 9.1: Hybrid LLM Orchestrator:**
+*   **Task 9.1: Hybrid LLM Orchestrator**
     *   **Status:** completed
     *   Create a central `LLMOrchestrator` class responsible for intelligently routing requests between local and provider LLMs, applying boosting/optimization strategies.
     *   Manage parallel execution and selection criteria based on performance, cost, and specific task requirements.
-*   **Task 9.2: MCP Registry/Discovery:**
+*   **Task 9.2: MCP Registry/Discovery**
     *   **Status:** completed
     *   Implement a mechanism for the orchestration layer to discover and register all available MCP servers (local and provider-based).
-*   **Task 9.3: Cooperative Strategy Implementation:**
+*   **Task 9.3: Cooperative Strategy Implementation**
     *   **Status:** pending
     *   Define and implement strategies for "co-operative" behavior between LLMs and MCP servers, including chaining calls and parallel execution for enhanced capabilities.
 
 ### Phase 10: Testing & Optimization
-**Status:** in_progress
+**Status:** pending
 
-*   **Task 10.1: Write Comprehensive Unit Tests:**
+*   **Task 10.1: Write Comprehensive Unit Tests**
     *   **Status:** pending
     *   Develop unit tests for each class and function across the system.
-*   **Task 10.2: Develop Integration Tests:**
+*   **Task 10.2: Develop Integration Tests**
     *   **Status:** pending
     *   Create integration tests to verify seamless interaction between components.
-*   **Task 10.3: Perform Performance Benchmarking:**
+*   **Task 10.3: Perform Performance Benchmarking**
     *   **Status:** completed
     *   Conduct benchmarking for all integrated components, with a focus on hybrid LLM performance.
-*   **Task 10.4: Improve Error Handling & Robustness:**
+*   **Task 10.4: Improve Error Handling & Robustness**
     *   **Status:** completed
-    *   Enhance error handling, logging, and implement robust failure recovery strategies.
+    *   Enhance error handling mechanisms, logging, and implement strategies to ensure the system's robustness and graceful degradation under various failure scenarios.
+
+### Phase 11: Workflow Unification & Automation
+**Status:** pending
+
+*   **Task 11.1: Design Unified Backup Orchestration**
+    *   **Status:** completed
+    *   **Note:** The backup strategy now exclusively relies on `pre_edit_backup.sh` for pre-edit file snapshots; periodic backups are not implemented.
+*   **Task 11.2: Implement Unified Backup Script (orchestrated_backup.sh)**
+    *   **Status:** completed
+    *   **Note:** This task is completed by the existing `pre_edit_backup.sh` script, which handles the designated pre-edit backup functionality. `simple_backup.sh` has been deprecated and moved to `backups/deprecated_scripts/`.
+*   **Task 11.3: Integrate Unified Backup into workspace_sync.sh**
+    *   **Status:** pending
+    *   Ensure `pre_edit_backup.sh` (or its equivalent function) is used strategically within `workspace_sync.sh` before significant modifications or commits.
+*   **Task 11.4: Refine CHANGELOG.md generation in workspace_sync.sh using git-changelog**
+    *   **Status:** pending
+    *   Replace the placeholder `CHANGELOG.md` update logic in `workspace_sync.sh` with a call to `git-changelog` to automate generation based on Conventional Commits.
+*   **Task 11.5: Update GEMINI.md to describe the unified workflow**
+    *   **Status:** pending
+    *   Add a section to `GEMINI.md` detailing the unified project management, backup strategy, and change tracking processes.
+*   **Task 11.6: Implement Agent Operation Logging**
+    *   **Status:** pending
+    *   Develop a mechanism to systematically record significant actions, decisions, and their rationale (why, what, how, when) taken by the agent into a dedicated log (e.g., `AGENT_LOG.md` or as structured entries in `ERROR_REGISTRY.md`).
