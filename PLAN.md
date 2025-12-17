@@ -171,17 +171,17 @@ The following tasks are organized into phases, reflecting the detailed steps req
 **Status:** pending
 
 *   **Task 11.1: Design Unified Backup Orchestration (Pre-edit & Periodic Snapshots)**
-    *   **Status:** in_progress
-    *   **Note:** Design the orchestration of both `pre_edit_backup.sh` for individual file snapshots and `simple_backup.sh` for periodic project snapshots. This is an interim strategy towards a more comprehensive incremental backup.
+    *   **Status:** pending
+    *   **Note:** Design the orchestration of both `pre_edit_backup.sh` for individual file snapshots and `simple_backup.sh` for periodic project snapshots, as an interim strategy towards a more comprehensive incremental backup.
 *   **Task 11.2: Implement Unified Backup Script (orchestrated_backup.sh)**
     *   **Status:** pending
     *   **Note:** Implement a mechanism to orchestrate the use of `pre_edit_backup.sh` and `simple_backup.sh` as part of the unified backup strategy.
 *   **Task 11.3: Integrate Unified Backup into workspace_sync.sh**
     *   **Status:** pending
     *   Ensure the unified backup mechanism is used strategically within `workspace_sync.sh` before significant modifications or commits.
-*   **Task 11.4: Refine CHANGELOG.md generation in workspace_sync.sh using git-changelog**
-    *   **Status:** pending
-    *   Replace the placeholder `CHANGELOG.md` update logic in `workspace_sync.sh` with a call to `git-changelog` to automate generation based on Conventional Commits.
+*   **Task 11.4: Refine CHANGELOG.md generation in workspace_sync.sh (PR-based)**
+    *   **Status:** in_progress
+    *   **Note:** Implement `CHANGELOG.md` generation based on Pull Request information (e.g., merged PR titles and descriptions) rather than directly from individual commit messages. This likely involves configuring `git-changelog` or a similar tool to process PR metadata.
 *   **Task 11.5: Update GEMINI.md to describe the unified workflow**
     *   **Status:** pending
     *   Add a section to `GEMINI.md` detailing the unified project management, backup strategy, and change tracking processes.

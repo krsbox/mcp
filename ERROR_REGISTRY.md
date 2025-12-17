@@ -69,3 +69,9 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** The agent initially deprecated `simple_backup.sh` assuming a "pre-edit only" backup strategy. User clarified that both `pre_edit_backup.sh` and `simple_backup.sh` functionalities are valued and should be part of the unified backup.
 *   **Resolution:** Re-evaluation of the unified backup strategy to incorporate both `pre_edit_backup.sh` for individual file snapshots and `simple_backup.sh` for periodic project snapshots. `simple_backup.sh` functionality is reinstated.
 *   **Impact:** The "Unified Backup Orchestration" design (Task 11.1) now explicitly includes both backup methods as an interim strategy. This ensures comprehensive protection for both granular file edits and broader project documents/configuration.
+
+### Issue ID: ERR-012
+*   **Issue:** Clarification on CHANGELOG.md generation strategy: Coupling to PRs instead of commit messages.
+*   **Context:** The agent initially assumed CHANGELOG.md generation would be directly from commit messages. User clarified that the changelog should be coupled to Pull Request information, reflecting a more structured release process.
+*   **Resolution:** Re-evaluation of Task 11.4 to focus on implementing CHANGELOG.md generation based on PR metadata (e.g., titles, descriptions, labels) rather than raw commit messages. This requires configuring git-changelog or selecting an alternative tool.
+*   **Impact:** Shifts the implementation strategy for automated changelog generation to align with best practices for larger projects and more structured release notes. This will result in more meaningful and user-friendly changelogs.
