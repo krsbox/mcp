@@ -63,3 +63,9 @@ This document tracks significant errors and issues encountered during the projec
 *   **Context:** After completing the documentation update for `PLAN.md` (marking Task 1.2 as completed), the agent failed to commit the associated code changes (`src/data_models/`). This led to a discrepancy between `PLAN.md`'s status and the actual committed codebase state.
 *   **Resolution:** The missing code was subsequently committed in a separate action. The agent will enhance its internal process to ensure code changes and corresponding documentation updates (like `PLAN.md` status changes) are committed synchronously, or at least that any pending code commits are highlighted immediately.
 *   **Impact:** Minor delay in development process due to necessary corrective action. Highlighted a need for stricter internal adherence to change management protocols for the agent.
+
+### Issue ID: ERR-011
+*   **Issue:** Clarification on unified backup strategy: Initial misunderstanding regarding the deprecation of `simple_backup.sh`.
+*   **Context:** The agent initially deprecated `simple_backup.sh` assuming a "pre-edit only" backup strategy. User clarified that both `pre_edit_backup.sh` and `simple_backup.sh` functionalities are valued and should be part of the unified backup.
+*   **Resolution:** Re-evaluation of the unified backup strategy to incorporate both `pre_edit_backup.sh` for individual file snapshots and `simple_backup.sh` for periodic project snapshots. `simple_backup.sh` functionality is reinstated.
+*   **Impact:** The "Unified Backup Orchestration" design (Task 11.1) now explicitly includes both backup methods as an interim strategy. This ensures comprehensive protection for both granular file edits and broader project documents/configuration.
